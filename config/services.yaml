@@ -1,0 +1,116 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Neo\BasicBundle\:
+        resource: ../src/
+        exclude:
+            - ../src/DependencyInjection/
+            - ../src/ContaoManager/
+            - ../src/NeoBasicBundle.php
+            - ../src/License/Certificate.php
+            - ../src/License/LicenseState.php
+            - ../src/License/PublicKeys.php
+            - ../src/Access/AccessPage.php
+
+    # Used by other extensions and by DCA callbacks (resolved from the container), hence public.
+    Neo\BasicBundle\Security\SecretCipher:
+        arguments:
+            $secret: '%kernel.secret%'
+        public: true
+
+    Neo\BasicBundle\Ai\AiConnection:
+        public: true
+
+    Neo\BasicBundle\Dock\Dock:
+        public: true
+
+    Neo\BasicBundle\Translation\AzureConnection:
+        public: true
+
+    Neo\BasicBundle\Translation\AzureTranslator:
+        arguments:
+            $httpClient: '@neo_basic.translator_client'
+        public: true
+
+    Neo\BasicBundle\Backend\AzureTestOperation:
+        public: true
+
+    Neo\BasicBundle\Translation\DeepLConnection:
+        arguments:
+            $url: '%neo_basic.deepl_url%'
+        public: true
+
+    Neo\BasicBundle\Translation\DeepLTranslator:
+        arguments:
+            $httpClient: '@neo_basic.translator_client'
+        public: true
+
+    Neo\BasicBundle\Translation\AiTranslator:
+        arguments:
+            $httpClient: '@neo_basic.translator_client'
+        public: true
+
+    Neo\BasicBundle\Translation\Translators:
+        public: true
+
+    Neo\BasicBundle\Backend\DeepLTestOperation:
+        public: true
+
+    Neo\BasicBundle\Ai\ModelCatalog:
+        arguments:
+            $httpClient: '@neo_basic.ai_client'
+            $cache: '@cache.app'
+        public: true
+
+    Neo\BasicBundle\Access\AccessSettings:
+        public: true
+
+    Neo\BasicBundle\Access\AccessCallbacks:
+        public: true
+
+    Neo\BasicBundle\Backend\AiTestOperation:
+        arguments:
+            $httpClient: '@neo_basic.ai_client'
+        public: true
+
+    # Cache tags on Contao 5.3 to 5.x: the CacheTagManager (5.5+) or EntityCacheTags (5.3, 5.4).
+    Neo\BasicBundle\Cache\PageCacheTags:
+        arguments:
+            $services: !service_locator
+                tag_manager: '@?contao.cache.tag_manager'
+                entity_tags: '@?contao.cache.entity_tags'
+
+    Neo\BasicBundle\License\LicenseService:
+        arguments:
+            $httpClient: '@neo_basic.license_client'
+            $serviceUrl: '%neo_basic.license_url%'
+        public: true
+
+    Neo\BasicBundle\License\LicenseFields:
+        public: true
+
+    Neo\BasicBundle\Terms\TermsService:
+        public: true
+
+    Neo\BasicBundle\Terms\TermsFields:
+        public: true
+
+    neo_basic.ai_client:
+        class: Symfony\Contracts\HttpClient\HttpClientInterface
+        factory: ['Symfony\Component\HttpClient\HttpClient', 'create']
+        arguments:
+            - { timeout: 10, max_duration: 20 }
+
+    neo_basic.translator_client:
+        class: Symfony\Contracts\HttpClient\HttpClientInterface
+        factory: ['Symfony\Component\HttpClient\HttpClient', 'create']
+        arguments:
+            - { timeout: 15, max_duration: 45 }
+
+    neo_basic.license_client:
+        class: Symfony\Contracts\HttpClient\HttpClientInterface
+        factory: ['Symfony\Component\HttpClient\HttpClient', 'create']
+        arguments:
+            - { timeout: 8, max_duration: 15 }

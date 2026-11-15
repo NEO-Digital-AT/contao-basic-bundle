@@ -1,0 +1,52 @@
+/*
+ * Back-end modules of the extensions (menu group "neo"), see actions.js: the spinner of a button or link whose
+ * work runs, and the messages of an action right at its button. Colours come from the text and from Contao.
+ */
+.neo-busy {
+    display: inline-block;
+    flex: none;
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+    vertical-align: -2px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: neo-busy .7s linear infinite;
+}
+
+[aria-busy="true"]:is(button, a, input) {
+    cursor: progress;
+}
+
+/* In place of the icon of an operation link (Contao draws it as an image). */
+.neo-busy ~ img {
+    display: none;
+}
+
+@keyframes neo-busy {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .neo-busy {
+        animation-duration: 2s;
+    }
+}
+
+.neo-action__result {
+    margin: 10px 0 0;
+}
+
+/* In the bar of the form buttons: after them, on the same line where it fits. */
+.tl_submit_container .neo-action__result {
+    display: inline-flex;
+    margin: 0 0 0 8px;
+    vertical-align: middle;
+}
+
+.tl_submit_container .neo-action__result > * {
+    margin: 0;
+}

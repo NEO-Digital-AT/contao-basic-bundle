@@ -1,0 +1,165 @@
+/*
+ * Buttons at the edge of the screen (dock): neutral default design of the
+ * settings button and its menu. Every colour, size and distance is a CSS
+ * variable; a website overrides them in its own stylesheet, e.g.
+ *   :root { --neo-dock-bg: #0b5cad; --neo-dock-text: #ffffff; }
+ * The defaults sit on :where(:root) (no specificity), so the website wins
+ * whichever stylesheet loads first.
+ * Defaults meet WCAG 2.1 AA (text 4.5:1, controls 3:1).
+ */
+:where(:root) {
+  --neo-dock-offset: 16px;
+  --neo-dock-size: 44px;
+  --neo-dock-icon-size: 22px;
+  --neo-dock-gap: 12px;
+  --neo-dock-menu-gap: 12px;
+  --neo-dock-z: 9000;
+  --neo-dock-font: inherit;
+  --neo-dock-font-size: 15px;
+  --neo-dock-bg: #ffffff;
+  --neo-dock-text: #1f2328;
+  --neo-dock-line: #d0d7de;
+  --neo-dock-hover: #eaeef2;
+  --neo-dock-focus: #1f5fad;
+  --neo-dock-radius: 8px;
+  --neo-dock-item-radius: 6px;
+  --neo-dock-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  --neo-dock-badge-bg: #1f2328;
+  --neo-dock-badge-text: #ffffff;
+}
+
+/* The container takes no room; its row-gap tells the script the gap between stacked buttons. */
+.neo-dock { row-gap: var(--neo-dock-gap); }
+
+/* ---- Buttons of the extensions ------------------------------------------ */
+
+/* In the menu, the extension's own button gives way to the settings button. */
+[data-neo-dock-place="menu"][data-neo-dock-launcher],
+[data-neo-dock-place="menu"] [data-neo-dock-launcher] { display: none !important; }
+
+/* One above the other: buttons over an open panel step back until it closes. */
+[data-neo-dock-covered][data-neo-dock-launcher],
+[data-neo-dock-covered] [data-neo-dock-launcher] { visibility: hidden !important; }
+
+/* ---- Settings button ----------------------------------------------------- */
+
+.neo-dock__button {
+  position: fixed;
+  z-index: var(--neo-dock-z);
+  box-sizing: border-box;
+  width: var(--neo-dock-size);
+  height: var(--neo-dock-size);
+  margin: 0;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--neo-dock-line);
+  background: var(--neo-dock-bg);
+  color: var(--neo-dock-text);
+  box-shadow: var(--neo-dock-shadow);
+  display: grid;
+  place-items: center;
+  font: inherit;
+  cursor: pointer;
+}
+.neo-dock__button[hidden] { display: none; }
+.neo-dock__button svg { width: var(--neo-dock-icon-size); height: var(--neo-dock-icon-size); }
+.neo-dock__button:focus-visible { outline: 3px solid var(--neo-dock-focus); outline-offset: 2px; }
+
+.neo-dock__button--bottom-left,
+.neo-dock__button--bottom-right { bottom: calc(var(--neo-dock-offset) + env(safe-area-inset-bottom, 0px)); }
+.neo-dock__button--top-left,
+.neo-dock__button--top-right { top: calc(var(--neo-dock-offset) + env(safe-area-inset-top, 0px)); }
+.neo-dock__button--bottom-left,
+.neo-dock__button--top-left { left: calc(var(--neo-dock-offset) + env(safe-area-inset-left, 0px)); }
+.neo-dock__button--bottom-right,
+.neo-dock__button--top-right { right: calc(var(--neo-dock-offset) + env(safe-area-inset-right, 0px)); }
+
+/* ---- Menu: above the button (bottom corners) or below it (top corners) --- */
+
+.neo-dock__menu {
+  position: fixed;
+  z-index: calc(var(--neo-dock-z) + 1);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: calc(100vw - 2 * var(--neo-dock-offset));
+  margin: 0;
+  padding: 6px;
+  border: 1px solid var(--neo-dock-line);
+  border-radius: var(--neo-dock-radius);
+  background: var(--neo-dock-bg);
+  color: var(--neo-dock-text);
+  box-shadow: var(--neo-dock-shadow);
+  font-family: var(--neo-dock-font);
+  font-size: var(--neo-dock-font-size);
+  line-height: 1.35;
+  animation: neo-dock-in 0.16s ease-out;
+}
+.neo-dock__menu[hidden] { display: none; }
+.neo-dock__menu--bottom-left,
+.neo-dock__menu--bottom-right { bottom: calc(var(--neo-dock-offset) + var(--neo-dock-size) + var(--neo-dock-menu-gap) + env(safe-area-inset-bottom, 0px)); }
+.neo-dock__menu--top-left,
+.neo-dock__menu--top-right { top: calc(var(--neo-dock-offset) + var(--neo-dock-size) + var(--neo-dock-menu-gap) + env(safe-area-inset-top, 0px)); }
+.neo-dock__menu--bottom-left,
+.neo-dock__menu--top-left { left: calc(var(--neo-dock-offset) + env(safe-area-inset-left, 0px)); }
+.neo-dock__menu--bottom-right,
+.neo-dock__menu--top-right { right: calc(var(--neo-dock-offset) + env(safe-area-inset-right, 0px)); }
+.neo-dock__menu--top-left,
+.neo-dock__menu--top-right { animation-name: neo-dock-in-down; }
+
+.neo-dock__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: var(--neo-dock-item-radius);
+  background: transparent;
+  color: var(--neo-dock-text);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: normal;
+  cursor: pointer;
+}
+.neo-dock__item:hover,
+.neo-dock__item:focus { background: var(--neo-dock-hover); }
+.neo-dock__item:focus-visible { outline: 3px solid var(--neo-dock-focus); outline-offset: 2px; }
+.neo-dock__icon { display: inline-flex; flex: none; }
+.neo-dock__icon > * { width: var(--neo-dock-icon-size); height: var(--neo-dock-icon-size); }
+.neo-dock__label { flex: 1 1 auto; }
+.neo-dock__badge {
+  flex: none;
+  min-width: 1.5em;
+  padding: 0 0.4em;
+  border-radius: 999px;
+  background: var(--neo-dock-badge-bg);
+  color: var(--neo-dock-badge-text);
+  font-size: 0.8em;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@keyframes neo-dock-in { from { opacity: 0; transform: translateY(8px); } }
+@keyframes neo-dock-in-down { from { opacity: 0; transform: translateY(-8px); } }
+
+/* No movement: the visitor's system setting, or an accessibility tool that switches movement off. */
+@media (prefers-reduced-motion: reduce) {
+  .neo-dock__menu { animation: none; }
+}
+html[data-a11y-motion] .neo-dock__menu { animation: none; }
+
+/* Windows contrast themes: the button and the menu keep a visible edge. */
+@media (forced-colors: active) {
+  .neo-dock__button,
+  .neo-dock__menu { border: 2px solid CanvasText; }
+  .neo-dock__badge { border: 1px solid CanvasText; }
+}

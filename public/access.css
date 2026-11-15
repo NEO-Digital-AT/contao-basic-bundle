@@ -1,0 +1,60 @@
+/*
+ * "Access keys and licences": the status of a licence row stands on the line
+ * of its key field. The status block repeats the label line of the key field
+ * (an empty h3, hidden from screen readers), so its top is the top of the
+ * input in any back-end theme; the first status line then fills the rest of
+ * the row, which is the height of the input. With more lines (a stored key:
+ * last check, "Check now") the block is higher than the field and starts at
+ * its top.
+ */
+.neo-license-status {
+    display: flex;
+    flex-direction: column;
+}
+
+/* "Check now" on the line of the key field, the status right next to it. */
+.neo-license-status__row {
+    display: flex;
+    flex: 1 1 auto;
+    gap: 8px;
+}
+
+.neo-license-status__row > .tl_submit {
+    flex: none;
+    align-self: flex-start;
+}
+
+.neo-license-status__row > [data-neo-access-result],
+.neo-license-status__row > [data-neo-access-result] > div,
+.neo-license-status .tl_message {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.neo-license-status .tl_message {
+    margin: 0 0 3px;
+}
+
+.neo-license-status .tl_message > p:first-child {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    margin: 0;
+}
+
+.neo-license-status a {
+    text-decoration: underline;
+}
+
+/* Per domain "valid" or why the licence does not cover it (licence service with installations). */
+.neo-license-domains ul {
+    margin: 0;
+    padding-left: 18px;
+    list-style: disc;
+}
+
+.neo-license-domains li + li {
+    margin-top: 2px;
+}
