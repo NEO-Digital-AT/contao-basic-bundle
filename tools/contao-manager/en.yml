@@ -1,0 +1,10 @@
+en:
+    title: NEO Basic
+    description: >
+        Shared foundation of the NEO extensions: the back-end page "Access keys and licences" for
+        licence keys, the AI connection, translation services and the keys of external services, stored
+        encrypted. Installed by the extensions as a dependency; on its own it adds nothing.
+    keywords: [licence, AI, keys, translation]
+    support:
+        docs: https://github.com/NEO-Digital-AT/contao-basic-bundle/blob/main/docs/en/README.md
+    dependency: true

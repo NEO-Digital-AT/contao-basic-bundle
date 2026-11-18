@@ -1,0 +1,9 @@
+# Contao minor and packages to hold back. Contao 5.4 to 5.6 get no more updates; with today's newest dependencies
+# they do not run, while existing installations keep the older versions in their composer.lock. Checked without the
+# extensions as well (a plain Managed Edition fails the same way):
+# - league/flysystem-bundle 3.7: "Class AdapterDefinitionFactory not found". Contao 5.3.54 holds it back itself.
+# - symfony/var-exporter 8 (PHP 8.4 and later): "Lazy ghost objects cannot be enabled". Contao 5.6 excludes it.
+# - doctrine/dbal 4.5: contao:migrate fails with "ALTER TABLE tl_message_queue ENGINE =". Contao 5.7 handles it.
+5.4 league/flysystem-bundle:<3.7 symfony/var-exporter:<8
+5.5 league/flysystem-bundle:<3.7 symfony/var-exporter:<8
+5.6 league/flysystem-bundle:<3.7 doctrine/dbal:<4.5

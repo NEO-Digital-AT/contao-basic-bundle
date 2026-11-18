@@ -1,0 +1,9 @@
+# Package (vendor/name) and the folder of its working copy, relative to NEO_REPOS.
+neo-digital/contao-basic-bundle contao-basic-bundle
+neo-digital/contao-superagent-bundle contao-superagent-bundle
+neo-digital/contao-brevo-bundle contao-brevo-bundle
+neo-digital/contao-llms-bundle contao-llms-bundle
+neo-digital/contao-cookieconsent-bundle contao-cookieconsent-bundle
+neo-digital/contao-accessibility-bundle contao-accessibility-bundle
+neo-digital/contao-frontendeditor-bundle contao-frontendeditor-bundle
+neo-digital/contao-websitecheck-bundle contao-websitecheck-bundle

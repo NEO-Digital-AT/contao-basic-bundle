@@ -1,0 +1,11 @@
+de:
+    title: NEO Basic
+    description: >
+        Gemeinsame Grundlage der NEO-Erweiterungen: die Backend-Seite „Zugänge und Lizenzen“ für
+        Lizenzschlüssel, KI-Verbindung, Übersetzungsdienste und die Schlüssel fremder Dienste,
+        verschlüsselt gespeichert. Wird von den Erweiterungen als Abhängigkeit mitinstalliert und
+        ergänzt allein nichts.
+    keywords: [Lizenz, KI, Schlüssel, Übersetzung]
+    support:
+        docs: https://github.com/NEO-Digital-AT/contao-basic-bundle/blob/main/docs/de/README.md
+    dependency: true
